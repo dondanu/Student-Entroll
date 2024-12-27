@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>User Management</h1>
+
+  <!-- Create User Form -->
+  <h2>Create User</h2>
+  <form id="createUserForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age"><br><br>
+    <button type="submit">Create User</button>
+  </form>
+
+  <!-- Display All Users -->
+  <h2>Users List</h2>
+  <button onclick="getUsers()">Fetch All Users</button>
+  <ul id="userList"></ul>
+
+  <!-- Update User Form -->
+  <h2>Update User</h2>
+  <form id="updateUserForm">
+    <label for="updateId">User ID:</label>
+    <input type="text" id="updateId" name="id" required><br><br>
+    <label for="updateName">Name:</label>
+    <input type="text" id="updateName" name="name"><br><br>
+    <label for="updateEmail">Email:</label>
+    <input type="email" id="updateEmail" name="email"><br><br>
+    <label for="updateAge">Age:</label>
+    <input type="number" id="updateAge" name="age"><br><br>
+    <button type="submit">Update User</button>
+  </form>
+
+  <!-- Delete User -->
+  <h2>Delete User</h2>
+  <form id="deleteUserForm">
+    <label for="deleteId">User ID:</label>
+    <input type="text" id="deleteId" name="id" required><br><br>
+    <button type="submit">Delete User</button>
+  </form>
+
+  <script>
+    // API Base URL (change if using a different server or port)
+    const API_BASE_URL = 'http://localhost:5000';
+
+    // Create User
+    document.getElementById('createUserForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const age = document.getElementById('age').value;
+
+      try {
+        const response = await axios.post(`${API_BASE_URL}/users`, { name, email, age });
+        alert('User created successfully');
+        getUsers();  // Refresh user list
+      } catch (error) {
+        console.error(error);
+        alert('Error creating user');
+      }
+    });
+
+    // Get All Users
+    async function getUsers() {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/users`);
+        const userList = document.getElementById('userList');
+        userList.innerHTML = '';  // Clear current list
+
+        response.data.forEach(user => {
+          const li = document.createElement('li');
+          li.textContent = `ID: ${user._id} | Name: ${user.name} | Email: ${user.email} | Age: ${user.age}`;
+          userList.appendChild(li);
+        });
+      } catch (error) {
+        console.error(error);
+        alert('Error fetching users');
+      }
+    }
+
+    // Update User
+    document.getElementById('updateUserForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const id = document.getElementById('updateId').value;
+      const name = document.getElementById('updateName').value;
+      const email = document.getElementById('updateEmail').value;
+      const age = document.getElementById('updateAge').value;
+
+      try {
+        const response = await axios.put(`${API_BASE_URL}/users/${id}`, { name, email, age });
+        alert('User updated successfully');
+        getUsers();  // Refresh user list
+      } catch (error) {
+        console.error(error);
+        alert('Error updating user');
+      }
+    });
+
+    // Delete User
+    document.getElementById('deleteUserForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const id = document.getElementById('deleteId').value;
+
+      try {
+        const response = await axios.delete(`${API_BASE_URL}/users/${id}`);
+        alert('User deleted successfully');
+        getUsers();  // Refresh user list
+      } catch (error) {
+        console.error(error);
+        alert('Error deleting user');
+      }
+    });
+  </script>
+</body>
+</html>

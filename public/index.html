@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Enrollment System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Primary Heading -->
+    <h1 class="heading">Student Enrol</h1>
+
+    <!-- Add Student Form -->
+    <div class="form-container">
+      <form id="addStudentForm">
+        <h2>Add New Student</h2>
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="number" id="age" placeholder="Age" required>
+        <input type="text" id="major" placeholder="Major" required>
+        <input type="text" id="courses" placeholder="Courses (comma-separated)" required>
+        <input type="date" id="enrollmentDate" placeholder="Enrollment Date" name="gg">
+        <label>Graduated:</label>
+        <select id="graduated">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+        <button type="submit">Add Student</button>
+      </form>
+    </div>
+
+    <!-- Edit Student Form -->
+    <div class="form-container" id="editStudentForm" style="display: none;">
+      <form>
+        <h2>Edit Student</h2>
+        <input type="hidden" id="editStudentId">
+        <input type="text" id="editName" placeholder="Name" required>
+        <input type="number" id="editAge" placeholder="Age" required>
+        <input type="text" id="editMajor" placeholder="Major" required>
+        <input type="text" id="editCourses" placeholder="Courses (comma-separated)" required>
+        <input type="date" id="editEnrollmentDate" placeholder="Enrollment Date" >
+        <label>Graduated:</label>
+        <select id="editGraduated">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+        <button type="submit">Update Student</button>
+      </form>
+    </div>
+
+    <!-- Student List -->
+    <div class="student-list-container">
+      <h2>Student Records</h2>
+      <div id="studentList"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
